@@ -1,0 +1,27 @@
+# editor files
+*~
+
+# python artifacts
+*.pyc
+
+# build artifacts
+build/
+*.mod
+*.o
+
+# test output
+*.testlog
+*.stdout
+*.bak
+*.regression
+
+# simulation output
+*.nc
+*.nc.rest
+*.nc.base
+
+# temporary files
+junk.*
+
+# os x junk
+.DS_Store

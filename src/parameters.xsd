@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://github.com/escmi/cime"
+           schemaLocation='"http://www.w3.org/2001/XMLSchema"'
+           xmlns="https://github.com/escmi/cime"
+           elementFormDefault="qualified">
+
+<xs:simpleType name="nameType">
+   <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z0-9_]+"/>
+      <xs:minLength value="1"/>
+      <xs:maxLength value="40"/>         
+   </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="metadataType">
+   <xs:simpleContent>
+      <xs:extension base='xs:string'>
+         <xs:attribute name='name' type='nameType' use='required'/>
+      </xs:extension>
+   </xs:simpleContent>
+</xs:complexType>
+
+<xs:complexType name='valueType'>
+   <xs:simpleContent>
+      <!-- <xs:extension base='xs:double'> -->
+      <xs:extension base='xs:string'>
+         <xs:attribute name='name' type='nameType' use='required'/>
+      </xs:extension>
+   </xs:simpleContent>
+</xs:complexType>
+
+<xs:complexType name='variableType'>
+   <xs:choice maxOccurs='unbounded'>
+      <xs:element name='metadata' type='metadataType'/>
+   </xs:choice>
+   <xs:attribute name='name' type='nameType' use='required'/>
+</xs:complexType>
+
+<xs:complexType name='groupType'>
+   <xs:choice maxOccurs='unbounded'>
+      <xs:element name='value' type='valueType'/>
+   </xs:choice>
+   <xs:attribute name='name' type='nameType' use='required'/>
+</xs:complexType>
+
+<xs:complexType name='definitionsType'>
+   <xs:choice maxOccurs='unbounded'>
+      <xs:element name='variable' type='variableType'/>
+   </xs:choice>
+   <xs:attribute name='name' type='nameType' use='required'/>
+</xs:complexType>
+
+<xs:complexType name='dataType'>
+   <xs:choice maxOccurs='unbounded'>
+      <xs:element name='value' type='valueType'/>
+      <xs:element name='group' type='groupType'/>
+   </xs:choice>
+   <xs:attribute name='name' type='nameType' use='required'/>
+</xs:complexType>
+
+<xs:complexType name='parameters'>
+   <xs:choice maxOccurs='unbounded'>
+      <xs:element name='definitions' type='definitionsType'/>
+      <xs:element name='data' type='dataType'/>
+   </xs:choice>
+   <xs:attribute name='version' type='xs:decimal' use='required'/>
+</xs:complexType>
+
+<xs:element name='parameters' type='parameters'>
+</xs:element>
+   
+</xs:schema>
